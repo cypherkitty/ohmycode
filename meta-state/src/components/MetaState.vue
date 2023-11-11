@@ -1,4 +1,5 @@
 <script lang="ts">
+import json from '../assets/state.json';
 
 export default {
   name: 'MetaState',
@@ -6,57 +7,7 @@ export default {
   data() {
     return {
       message: 'Here wil be json data from meta-state',
-      jsonData: [
-        {
-          "description": "Client creates a vault",
-          "nodes": [
-            {
-              "name": "device_a",
-              "records": [
-                {
-                  "key": "DeviceA/VaultAudit/test_vault@1",
-                  "value": "JoinRequest { device_a }"
-                }
-              ]
-            },
-            {
-              "name": "device_b",
-              "records": []
-            },
-            {
-              "name": "server",
-              "records": []
-            }
-          ]
-        },
-        {
-          "description": "Server: gets a vault creation request",
-          "nodes": [
-            {
-              "name": "device_a",
-              "records": [
-                {
-                  "key": "DeviceA/VaultAudit/test_vault@1",
-                  "value": "JoinRequest { device_a }"
-                }
-              ]
-            },
-            {
-              "name": "device_b",
-              "records": []
-            },
-            {
-              "name": "server",
-              "records": [
-                {
-                  "key": "DeviceA/VaultAudit/test_vault@1",
-                  "value": "JoinRequest { device_a }"
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      jsonData: json
     }
   },
   methods: {}

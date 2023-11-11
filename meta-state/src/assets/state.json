@@ -1,0 +1,82 @@
+[
+  {
+    "description": "Client creates a vault",
+    "nodes": [
+      {
+        "name": "device_a",
+        "records": [
+          {
+            "key": "DeviceA/VaultAudit/test_vault@1",
+            "value": "JoinRequest { device_a }"
+          }
+        ]
+      },
+      {
+        "name": "server",
+        "records": []
+      }
+    ]
+  },
+  {
+    "description": "Server: gets a vault creation request",
+    "nodes": [
+      {
+        "name": "device_a",
+        "records": [
+          {
+            "key": "DeviceA/VaultAudit/test_vault@1",
+            "value": "JoinRequest { device_a }"
+          }
+        ]
+      },
+      {
+        "name": "server",
+        "records": [
+          {
+            "key": "DeviceA/VaultAudit/test_vault@1",
+            "value": "JoinRequest { device_a }"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "description": "Server creates a new vault",
+    "nodes": [
+      {
+        "name": "device_a",
+        "records": [
+          {
+            "key": "DeviceA/VaultAudit/test_vault@1",
+            "value": "JoinRequest { device_a }"
+          }
+        ]
+      },
+      {
+        "name": "server",
+        "records": [
+          {
+            "key": "DeviceA/VaultAudit/test_vault@1",
+            "value": "JoinRequest { device_a }"
+          },
+          {
+            "key": "VaultAudit/test_vault@1",
+            "value": "JoinRequest { device_a }"
+          },
+          {
+            "key": "Vault/test_vault@1",
+            "value": "Unit { device_a }"
+          },
+          {
+            "key": "Vault/test_vault@2",
+            "value": "Genesis { server_key }"
+          },
+          {
+            "key": "Vault/test_vault@3",
+            "value": "Update { test_vault, device_a }"
+          }
+        ]
+      }
+    ]
+  }
+]
