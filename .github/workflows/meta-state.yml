@@ -1,0 +1,31 @@
+name: meta-state deployment
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+
+jobs:
+  meta-state-build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: npm build
+        working-directory: meta-state
+        run: |
+          npm run build
+
+      - name: Deploy cloudflare pages
+        uses: cloudflare/pages-action@1
+        with:
+          apiToken: ${{ secrets.CLOUD_FLARE_META_STATE_PAGES_TOKEN }}
+          accountId: ${{ secrets.CLOUD_FLARE_ACCOUNT_ID }}
+          projectName: meta-state
+          directory: meta-state/dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
