@@ -19,6 +19,8 @@ jobs:
       - name: npm build
         working-directory: meta-state
         run: |
+          npm install vue-tsc
+          npm install
           npm run build
 
       - name: Deploy cloudflare pages
