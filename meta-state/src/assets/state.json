@@ -97,7 +97,12 @@
                   {
                     "key": "VaultAudit/test_vault@1",
                     "value": "JoinRequest { device_a }"
-                  },
+                  }
+                ]
+              },
+              {
+                "name": "Vault",
+                "records": [
                   {
                     "key": "Vault/test_vault@1",
                     "value": "Unit { device_a }"
