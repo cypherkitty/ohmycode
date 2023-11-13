@@ -1,10 +1,10 @@
 [
   {
-    "workflowName": "Vault Creation",
+    "workflowName": "DeviceA: Vault Creation",
     "description": "A device creates a vault and the server creates a new vault",
     "states": [
       {
-        "description": "Client creates a vault",
+        "description": "DeviceA creates a vault request",
         "nodes": [
           {
             "name": "DEVICE_A",
@@ -31,20 +31,6 @@
         "description": "Server: gets a vault creation request",
         "nodes": [
           {
-            "name": "DEVICE_A",
-            "objects": [
-              {
-                "name": "DeviceA/VaultAudit",
-                "records": [
-                  {
-                    "key": "DeviceA/VaultAudit/test_vault@1",
-                    "value": "JoinRequest { device_a }"
-                  }
-                ]
-              }
-            ]
-          },
-          {
             "name": "SERVER",
             "objects": [
               {
@@ -62,23 +48,8 @@
       },
 
       {
-        "description": "Server creates a new vault",
+        "description": "Server creates a new vault with device_a",
         "nodes": [
-          {
-            "name": "DEVICE_A",
-            "objects": [
-              {
-                "name": "DeviceA/VaultAudit",
-                "records": [
-                  {
-                    "key": "DeviceA/VaultAudit/test_vault@1",
-                    "value": "JoinRequest { device_a }"
-                  }
-                ]
-              }
-            ]
-          },
-
           {
             "name": "SERVER",
             "objects": [
@@ -114,6 +85,206 @@
                   {
                     "key": "Vault/test_vault@3",
                     "value": "Update { test_vault, device_a }"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+
+      {
+        "description": "Device_a gets vault events from server",
+        "nodes": [
+          {
+            "name": "DEVICE_A",
+            "objects": [
+              {
+                "name": "DeviceA/VaultAudit",
+                "records": [
+                  {
+                    "key": "DeviceA/VaultAudit/test_vault@1",
+                    "value": "JoinRequest { device_a }"
+                  }
+                ]
+              },
+              {
+                "name": "VaultAudit",
+                "records": [
+                  {
+                    "key": "VaultAudit/test_vault@1",
+                    "value": "JoinRequest { device_a }"
+                  }
+                ]
+              },
+              {
+                "name": "Vault",
+                "records": [
+                  {
+                    "key": "Vault/test_vault@1",
+                    "value": "Unit { device_a }"
+                  },
+                  {
+                    "key": "Vault/test_vault@2",
+                    "value": "Genesis { server_key }"
+                  },
+                  {
+                    "key": "Vault/test_vault@3",
+                    "value": "Update { test_vault, device_a }"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+
+
+  {
+    "workflowName": "DeviceB: Join operation",
+    "description": "A second device joins the vault",
+    "states": [
+      {
+        "description": "DeviceB sends a join request",
+        "nodes": [
+          {
+            "name": "DEVICE_B",
+            "objects": [
+              {
+                "name": "DeviceB/VaultAudit",
+                "records": [
+                  {
+                    "key": "DeviceB/VaultAudit/test_vault@1",
+                    "value": "JoinRequest { device_b }"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+
+      {
+        "description": "Server: gets a join request",
+        "nodes": [
+          {
+            "name": "SERVER",
+            "objects": [
+              {
+                "name": "DeviceB/VaultAudit",
+                "records": [
+                  {
+                    "key": "DeviceB/VaultAudit/test_vault@1",
+                    "value": "JoinRequest { device_b }"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+
+      {
+        "description": "Server creates a new event in the audit log",
+        "nodes": [
+          {
+            "name": "SERVER",
+            "objects": [
+              {
+                "name": "DeviceB/VaultAudit",
+                "records": [
+                  {
+                    "key": "DeviceB/VaultAudit/test_vault@1",
+                    "value": "JoinRequest { device_b }"
+                  }
+                ]
+              },
+              {
+                "name": "VaultAudit",
+                "records": [
+                  {
+                    "key": "VaultAudit/test_vault@2",
+                    "value": "JoinRequest { device_b }"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+
+      {
+        "description": "DeviceA synchronizes the vault audit log",
+        "nodes": [
+          {
+            "name": "DEVICE_A",
+            "objects": [
+              {
+                "name": "VaultAudit",
+                "records": [
+                  {
+                    "key": "VaultAudit/test_vault@2",
+                    "value": "JoinRequest { device_b }"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+
+      {
+        "description": "DeviceA accepts the join request",
+        "nodes": [
+          {
+            "name": "DEVICE_A",
+            "objects": [
+              {
+                "name": "DeviceA/VaultAudit",
+                "records": [
+                  {
+                    "key": "DeviceA/VaultAudit/test_vault@2",
+                    "value": "Accept { device_b }"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+
+      {
+        "description": "Server creates 'accept' event in the audit log and update 'vault' object",
+        "nodes": [
+          {
+            "name": "SERVER",
+            "objects": [
+              {
+                "name": "DeviceA/VaultAudit",
+                "records": [
+                  {
+                    "key": "DeviceA/VaultAudit/test_vault@2",
+                    "value": "Accept { device_b }"
+                  }
+                ]
+              },
+              {
+                "name": "VaultAudit",
+                "records": [
+                  {
+                    "key": "VaultAudit/test_vault@2",
+                    "value": "JoinRequest { device_b }"
+                  }
+                ]
+              },
+              {
+                "name": "Vault",
+                "records": [
+                  {
+                    "key": "Vault/test_vault@4",
+                    "value": "Update { test_vault, [device_a, device_b] }"
                   }
                 ]
               }

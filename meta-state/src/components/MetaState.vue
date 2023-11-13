@@ -79,6 +79,7 @@ body {
 .container {
   display: flex;
   padding: 25px;
+  flex-wrap: wrap;
 }
 
 .card {
@@ -100,6 +101,14 @@ body {
 }
 
 .record {
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  margin-left: 20px;
+}
+
+.record-highlight {
   background-color: #f9f9f9;
   padding: 10px;
   margin-bottom: 10px;
